@@ -12,6 +12,7 @@
 
 #include <get_next_line.h>
 
+/*
 size_t	ft_strlen(const char *s)
 {
 	size_t	count;
@@ -22,6 +23,7 @@ size_t	ft_strlen(const char *s)
 	return (count);
 }
 
+ */
 char	*ft_strchr(const char *s, int c)
 {
 	int		i;
@@ -61,6 +63,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	return (str);
 }
 
+/*
 void	*ft_calloc(size_t nmemb, size_t size)
 {
 	void	*ptr;
@@ -78,3 +81,4 @@ void	*ft_calloc(size_t nmemb, size_t size)
 	}
 	return (ptr);
 }
+*/

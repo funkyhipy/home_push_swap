@@ -10,10 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-
-#include "push_swap.h"
-#include "libft.h"
+#include <push_swap.h>
 
 // TODO: do better than O(n^2)
 int	find_highest(t_stack *s)

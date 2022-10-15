@@ -10,9 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
-#include "libft.h"
-#include "ft_printf.h"
+#include <push_swap.h>
 
 static void	do_complex_op(const char *op, t_stack *s1, t_stack *s2)
 {

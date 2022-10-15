@@ -21,7 +21,7 @@ LIBFT_DIRECTORY     =   ./libft/
 LIBFT               =   $(LIBFT_DIRECTORY)libft.a
 LIBFT_HEADERS       =   $(LIBFT_DIRECTORY)incl/
 
-INCLUDES            =   -I$(HEADERS_DIRECTORY) -I$(LIBFT_HEADERS) -I/usr/include
+INCLUDES            =   -I$(LIBFT_HEADERS) -I$(HEADERS_DIRECTORY) -I/usr/include
 
 ##################################################################
 #Header PART OF MAKEFILE
@@ -62,7 +62,8 @@ RESET = \033[0m
 ##################################################################
 #Commands PART OF MAKEFILE
 ##################################################################
-CHECKER_PROGRAM	= ./checker_Mac
+#CHECKER_PROGRAM	= ./checker_Mac
+CHECKER_PROGRAM	= ./checker_linux
 
 all: $(NAME)
 

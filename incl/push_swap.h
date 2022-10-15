@@ -15,6 +15,7 @@
 
 # include <stdlib.h>
 # include <libft.h>
+# include <ft_printf.h>
 
 # define SORT_ASCENDING 1
 # define SORT_DESCENDING 0

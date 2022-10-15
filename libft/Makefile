@@ -22,6 +22,7 @@ HEADERS_LIST = \
 	libft.h \
 	get_next_line.h \
 	ft_printf.h
+
 HEADERS_DIRECTORY = ./incl/
 HEADERS = $(addprefix $(HEADERS_DIRECTORY), $(HEADERS_LIST))
 
@@ -76,15 +77,18 @@ LIBFT_SOURCES_LIST = \
 	ft_substr.c \
 	ft_tolower.c \
 	ft_toupper.c
+
 PRINTF_DIRECTORY = printf/
 PRINTF_SOURCES_LIST = \
 	file.c \
 	file2.c \
 	ft_printf.c
+
 GNL_DIRECTORY = get_next_line/
 GNL_SOURCES_LIST = \
 	get_next_line_utils.c \
 	get_next_line.c
+
 SOURCES = $(addprefix $(SOURCES_DIRECTORY), $(SOURCES_LIST))
 SOURCES_LIST = \
 	$(addprefix $(LIBFT_DIRECTORY), $(LIBFT_SOURCES_LIST)) \

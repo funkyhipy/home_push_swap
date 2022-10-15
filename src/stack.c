@@ -10,10 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-
-#include "push_swap.h"
-#include "libft.h"
+#include <push_swap.h>
 
 int	stack_init(t_stack	*s, int n_tot, char name)
 {
