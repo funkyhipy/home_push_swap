@@ -16,9 +16,7 @@ static int	check_only_digits(const char *str)
 	while (str && *str)
 	{
 		if (*str != '-' && !ft_isdigit(*str) && *str != ' ')
-		{
 			return (0);
-		}
 		str++;
 	}
 	return (1);

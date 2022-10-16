@@ -12,24 +12,24 @@
 
 #include <push_swap.h>
 
-char	is_sorted(const t_stack *s, char ascending)
+char	is_sorted(const t_stack *s, int order)
 {
-	int	idx;
+	int	i;
 
-	idx = 0;
-	if (ascending)
+	i = 0;
+	if (order)
 	{
-		while (++idx < s->nbr)
+		while (++i < s->nbr)
 		{
-			if (get_e(s, idx) <= get_e(s, idx - 1))
+			if (get_e(s, i) <= get_e(s, i - 1))
 				return (0);
 		}
 	}
 	else
 	{
-		while (++idx < s->nbr)
+		while (++i < s->nbr)
 		{
-			if (get_e(s, idx) >= get_e(s, idx - 1))
+			if (get_e(s, i) >= get_e(s, i - 1))
 				return (0);
 		}
 	}

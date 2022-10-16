@@ -18,9 +18,9 @@ void	swap(t_stack *s)
 
 	if (s->nbr < 2)
 		return ;
-	tmp = s->v[s->nbr - 1];
-	s->v[s->nbr - 1] = s->v[s->nbr - 2];
-	s->v[s->nbr - 2] = tmp;
+	tmp = s->values[s->nbr - 1];
+	s->values[s->nbr - 1] = s->values[s->nbr - 2];
+	s->values[s->nbr - 2] = tmp;
 }
 
 void	r_rot(t_stack *s)
@@ -30,11 +30,11 @@ void	r_rot(t_stack *s)
 
 	if (s->nbr < 2)
 		return ;
-	tmp = s->v[0];
+	tmp = s->values[0];
 	i = 0;
 	while (i++ < s->nbr - 1)
-		s->v[i - 1] = s->v[i];
-	s->v[s->nbr - 1] = tmp;
+		s->values[i - 1] = s->values[i];
+	s->values[s->nbr - 1] = tmp;
 }
 
 void	rot(t_stack *s)
@@ -44,18 +44,18 @@ void	rot(t_stack *s)
 
 	if (s->nbr < 2)
 		return ;
-	tmp = s->v[s->nbr - 1];
+	tmp = s->values[s->nbr - 1];
 	i = s->nbr;
 	while (i--)
-		s->v[i] = s->v[i - 1];
-	s->v[0] = tmp;
+		s->values[i] = s->values[i - 1];
+	s->values[0] = tmp;
 }
 
 void	push(t_stack *dest, t_stack *src)
 {
 	if (src->nbr < 1)
 		return ;
-	dest->v[dest->nbr] = src->v[src->nbr - 1];
+	dest->values[dest->nbr] = src->values[src->nbr - 1];
 	dest->nbr++;
 	src->nbr--;
 }

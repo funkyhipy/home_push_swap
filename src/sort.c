@@ -12,109 +12,96 @@
 
 #include <push_swap.h>
 
-typedef struct s_sort_info
+static int	push_chunk_back_to_a(t_stack *s1, t_stack *s2)
 {
-	int	n_chks;
-	int	n_per_chunks;
-	int	i_chk;
-	int	low_thres;
-	int	up_thres;
-}	t_sort_info;
+	int	min_i;
+	int	max_i;
+	int	n;
 
-/*
- * Return the number of values that are pushed under
- *
- * */
-static int	push_chunk_back_to_a(t_stack *a, t_stack *b)
-{
-	int	min_pos;
-	int	max_pos;
-	int	n_low;
-
-	n_low = 0;
-	while (b->nbr)
+	n = 0;
+	while (s2->nbr)
 	{
-		min_pos = find_min_value(b, -1);
-		max_pos = find_max_value(b, -1);
-		if (n_op_rotate_to_top(b, min_pos) < n_op_rotate_to_top(b, max_pos))
+		min_i = find_min_value(s2, -1);
+		max_i = find_max_value(s2, -1);
+		if (n_op_rotate_to_top(s2, min_i) < n_op_rotate_to_top(s2, max_i))
 		{
-			rotate_to_top(b, min_pos);
-			do_op(OP_PUSH, a, b);
-			do_op(OP_ROT, a, NULL);
+			rotate_to_top(s2, min_i);
+			do_op(OP_PUSH, s1, s2);
+			do_op(OP_ROT, s1, NULL);
 		}
 		else
 		{
-			rotate_to_top(b, max_pos);
-			do_op(OP_PUSH, a, b);
-			n_low++;
+			rotate_to_top(s2, max_i);
+			do_op(OP_PUSH, s1, s2);
+			n++;
 		}
 	}
-	return (n_low);
+	return (n);
 }
 
-static void	send_above_threshold_to_b(t_stack *a, t_stack *b, t_sort_info *info)
+static void	send_above_threshold_to_b(t_stack *s1, t_stack *s2, t_chunk *chk)
 {
 	int	i;
 	int	check_until;
 	int	n_rot;
 
-	info->low_thres = a->n_tot - (info->i_chk + 1) * info->n_per_chunks;
-	info->up_thres = a->n_tot - (info->i_chk) * info->n_per_chunks;
-	check_until = a->nbr - info->i_chk * info->n_per_chunks;
-	if (info->i_chk == info->n_chks - 1)
-		info->low_thres = 0;
+	chk->low_thres = s1->max_size - (chk->idx + 1) * chk->size;
+	chk->up_thres = s1->max_size - (chk->idx) * chk->size;
+	check_until = s1->nbr - chk->idx * chk->size;
+	if (chk->idx == chk->chk_nbrs - 1)
+		chk->low_thres = 0;
 	i = 0;
 	n_rot = 0;
 	while (i < check_until)
 	{
-		if (get_e(a, 0) >= info->low_thres && get_e(a, 0) < info->up_thres)
+		if (get_e(s1, 0) >= chk->low_thres && get_e(s1, 0) < chk->up_thres)
 		{
-			do_op(OP_PUSH, b, a);
+			do_op(OP_PUSH, s2, s1);
 		}
 		else
 		{
-			do_op(OP_ROT, a, NULL);
+			do_op(OP_ROT, s1, NULL);
 			n_rot++;
 		}
 		i++;
 	}
 }
 
-static void	compute_n_chunks(t_stack *a, t_sort_info *info)
+static void	compute_n_chunks(t_stack *s1, t_chunk *chk)
 {
-	if (a->n_tot > 200)
-		info->n_chks = 7;
-	else if (a->n_tot > 80)
-		info->n_chks = 4;
+	if (s1->max_size > 200)
+		chk->chk_nbrs = 7;
+	else if (s1->max_size > 80)
+		chk->chk_nbrs = 4;
 	else
-		info->n_chks = 3;
-	info->i_chk = 0;
-	info->n_per_chunks = a->n_tot / info->n_chks;
+		chk->chk_nbrs = 3;
+	chk->idx = 0;
+	chk->size = s1->max_size / chk->chk_nbrs;
 }
 
-static void	sort_chunk(t_stack *a, t_stack *b, t_sort_info *info)
+static void	sort_chunk(t_stack *s1, t_stack *s2, t_chunk *chk)
 {
-	int	n_lows;
+	int	n;
 
-	send_above_threshold_to_b(a, b, info);
-	n_lows = push_chunk_back_to_a(a, b);
-	n_lows += info->i_chk * info->n_per_chunks;
-	while (n_lows--)
-		do_op(OP_ROT, a, NULL);
+	send_above_threshold_to_b(s1, s2, chk);
+	n = push_chunk_back_to_a(s1, s2);
+	n += chk->idx * chk->size;
+	while (n--)
+		do_op(OP_ROT, s1, NULL);
 }
 
-void	sort(t_stack *a, t_stack *b)
+void	sort(t_stack *s1, t_stack *s2)
 {
-	t_sort_info	info;
+	t_chunk	chk;
 
-	if (a->n_tot < 2 || is_sorted(a, SORT_ASCENDING))
+	if (s1->max_size < 2 || is_sorted(s1, SORT_ASCENDING))
 		return ;
-	else if (a->nbr <= 5)
-		return (small_sort(a, b));
-	compute_n_chunks(a, &info);
-	while (info.i_chk < info.n_chks)
+	else if (s1->nbr <= 5)
+		return (small_sort(s1, s2));
+	compute_n_chunks(s1, &chk);
+	while (chk.idx < chk.chk_nbrs)
 	{
-		sort_chunk(a, b, &info);
-		info.i_chk++;
+		sort_chunk(s1, s2, &chk);
+		chk.idx++;
 	}
 }

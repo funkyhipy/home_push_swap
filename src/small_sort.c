@@ -12,48 +12,48 @@
 
 #include <push_swap.h>
 
-void	sort_3(t_stack *a)
+void	sort_3(t_stack *s)
 {
-	if (is_sorted(a, SORT_ASCENDING))
+	if (is_sorted(s, SORT_ASCENDING))
 		return ;
-	if (get_e(a, 0) < get_e(a, 1) && get_e(a, 0) < get_e(a, 2))
+	if (get_e(s, 0) < get_e(s, 1) && get_e(s, 0) < get_e(s, 2))
 	{
-		do_op(OP_R_ROT, a, NULL);
-		do_op(OP_SWAP, a, NULL);
+		do_op(OP_R_ROT, s, NULL);
+		do_op(OP_SWAP, s, NULL);
 	}
-	else if (get_e(a, 0) < get_e(a, 1))
-		do_op(OP_R_ROT, a, NULL);
-	else if (get_e(a, 0) < get_e(a, 2))
-		do_op(OP_SWAP, a, NULL);
-	else if (get_e(a, 1) < get_e(a, 2))
-		do_op(OP_ROT, a, NULL);
+	else if (get_e(s, 0) < get_e(s, 1))
+		do_op(OP_R_ROT, s, NULL);
+	else if (get_e(s, 0) < get_e(s, 2))
+		do_op(OP_SWAP, s, NULL);
+	else if (get_e(s, 1) < get_e(s, 2))
+		do_op(OP_ROT, s, NULL);
 	else
 	{
-		do_op(OP_ROT, a, NULL);
-		do_op(OP_SWAP, a, NULL);
+		do_op(OP_ROT, s, NULL);
+		do_op(OP_SWAP, s, NULL);
 	}
 }
 
-void	sort_4(t_stack *a, t_stack *b)
+void	sort_4(t_stack *s1, t_stack *s2)
 {
-	int	min_idx;
+	int	i;
 
-	min_idx = find_min_value(a, -1);
-	rotate_to_top(a, min_idx);
-	do_op(OP_PUSH, b, a);
-	sort_3(a);
-	do_op(OP_PUSH, a, b);
+	i = find_min_value(s1, -1);
+	rotate_to_top(s1, i);
+	do_op(OP_PUSH, s2, s1);
+	sort_3(s1);
+	do_op(OP_PUSH, s1, s2);
 }
 
-void	sort_5(t_stack *a, t_stack *b)
+void	sort_5(t_stack *s1, t_stack *s2)
 {
-	int	min_idx;
+	int	i;
 
-	min_idx = find_min_value(a, -1);
-	rotate_to_top(a, min_idx);
-	do_op(OP_PUSH, b, a);
-	sort_4(a, b);
-	do_op(OP_PUSH, a, b);
+	i = find_min_value(s1, -1);
+	rotate_to_top(s1, i);
+	do_op(OP_PUSH, s2, s1);
+	sort_4(s1, s2);
+	do_op(OP_PUSH, s1, s2);
 }
 
 void	small_sort(t_stack *s1, t_stack *s2)
