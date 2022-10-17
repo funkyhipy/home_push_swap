@@ -62,8 +62,8 @@ RESET = \033[0m
 ##################################################################
 #Commands PART OF MAKEFILE
 ##################################################################
-#CHECKER_PROGRAM	= ./checker_Mac
-CHECKER_PROGRAM	= ./checker_linux
+CHECKER_PROGRAM	= ./checker_Mac
+#CHECKER_PROGRAM	= ./checker_linux
 
 all: $(NAME)
 

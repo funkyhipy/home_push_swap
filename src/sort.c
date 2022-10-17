@@ -82,12 +82,25 @@ static void	compute_n_chunks(t_stack *s1, t_chunk *chk)
 static void	sort_chunk(t_stack *s1, t_stack *s2, t_chunk *chk)
 {
 	int	n;
+	int	rr;
+	int	r;
 
 	send_above_threshold_to_b(s1, s2, chk);
 	n = push_chunk_back_to_a(s1, s2);
-	n += chk->idx * chk->size;
-	while (n--)
-		do_op(OP_ROT, s1, NULL);
+	r = n + chk->idx * chk->size;
+	rr = (s1->max_size) - (chk->idx * chk->size) - n;
+	if (r <= rr)
+	{
+		n = r;
+		while (n--)
+			do_op(OP_ROT, s1, NULL);
+	}
+	else
+	{
+		n = rr;
+		while (n--)
+			do_op(OP_R_ROT, s1, NULL);
+	}
 }
 
 void	sort(t_stack *s1, t_stack *s2)
